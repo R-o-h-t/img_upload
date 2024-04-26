@@ -1,0 +1,9 @@
+# python (fastapi)
+__pycache__/
+env/
+/back/
+
+# lit (vite)
+/front/node_modules/
+/front/dist/
+/front/pnpm-lock.yaml

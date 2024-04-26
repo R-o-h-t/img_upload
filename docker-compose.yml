@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  backend:
+    build: ./back
+    volumes:
+      - type: volume
+        source: file-storage
+        target: /app/files
+    ports:
+      - 8000:8000
+    environment:
+      - API_URL=http://backend:8000
+      - ALLOWED_ORIGINS=http://frontend:80
+      - UPLOAD_FOLDER=/app/files
+  frontend:
+    build: ./front
+    ports:
+      - 80:80
+    environment:
+      - VITE_APP_API_URL=http://backend:8000
+volumes:
+  file-storage:
