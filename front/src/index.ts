@@ -78,14 +78,14 @@ export class App extends LitElement {
   `;
 
 
-  async handleFileUpload(e) {
+  async handleFileUpload(e: { target: { files: File[] } }) {
     this.error = '';
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    const response = await fetch(`${process.env.VITE_APP_API_URL}/files/`, {
+    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/files/`, {
       method: 'POST',
       body: formData,
     });
@@ -102,17 +102,16 @@ export class App extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback();
-    const response = await fetch(`${process.env.VITE_APP_API_URL}/files/`);
+    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/files/`);
     const result = await response.json();
+    console.log(result);
     this.files = result.files;
     this.loading = false;
   }
 
   render() {
     if (this.loading) return html`
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>
+      <p>Loading files...</p>
     `;
     return html`
     <h1>File Upload</h1>
